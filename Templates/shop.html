@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Shop — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container" id="featured">
+
+    {% if nav_categories %}
+    <div class="filter-bar">
+        <a href="{{ url_for('shop') }}" class="filter-pill {{ 'active' if not selected_category else '' }}">All</a>
+        {% for cat in nav_categories %}
+        <a href="{{ url_for('shop', category=cat.name) }}" class="filter-pill {{ 'active' if selected_category == cat.name else '' }}">
+            {{ cat.icon }} {{ cat.name }}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="section-head">
+        <h2>
+            {% if search_query %}
+                🔍 Results for "{{ search_query }}"
+            {% elif selected_sort == 'newest' %}
+                🆕 New Arrivals
+            {% elif selected_sort == 'bestsellers' %}
+                🔥 Best Sellers
+            {% elif selected_category %}
+                {{ selected_category }}
+            {% else %}
+                🔥 All Products
+            {% endif %}
+        </h2>
+        <span class="section-note">{{ products|length }} item(s) available</span>
+    </div>
+
+    {% if products %}
+    <div class="products">
+        {% for product in products %}
+        <div class="card">
+
+            <div class="card-img-wrap">
+                {% if product[3] %}
+                <a href="{{ url_for('product_details', id=product[0]) }}">
+                    <img src="{{ url_for('static', filename='uploads/' + product[3]) }}" alt="{{ product[1] }}">
+                </a>
+                {% else %}
+                <div class="no-image">No Image</div>
+                {% endif %}
+
+                {% if selected_sort == 'newest' and loop.index <= 3 %}
+                <span class="product-badge">New</span>
+                {% endif %}
+
+                <span class="price-pill">KSh {{ product[2] }}</span>
+            </div>
+
+            <div class="card-body">
+                {% if product[5] %}
+                <div class="card-category">{{ product[5] }}</div>
+                {% endif %}
+                <h3><a href="{{ url_for('product_details', id=product[0]) }}">{{ product[1] }}</a></h3>
+                <p class="desc">{{ product[4] }}</p>
+                <div class="card-actions">
+                    <a href="{{ url_for('add_to_cart', id=product[0]) }}">
+                        <button type="button">Add to Cart</button>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">🛍️</div>
+        <p>No products found{% if search_query %} for "{{ search_query }}"{% endif %}.</p>
+        <a href="{{ url_for('shop') }}" class="btn btn-primary" style="margin-top: 14px; display: inline-block;">View All Products</a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

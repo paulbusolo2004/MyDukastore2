@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-card">
+        <h1>Welcome Back</h1>
+        <p class="form-sub">Log in to view your orders and checkout.</p>
+
+        <form action="{{ url_for('login_user') }}" method="POST">
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <p class="form-footer">
+            Don't have an account? <a href="{{ url_for('register') }}">Create one</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

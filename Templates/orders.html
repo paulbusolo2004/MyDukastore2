@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Orders Dashboard — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="section-head">
+        <h2>Customer Orders</h2>
+        <span class="section-note">
+            <a href="{{ url_for('admin') }}">← Back to Admin</a>
+        </span>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Email</th>
+                <th>Total (KSh)</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Update Status</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order[0] }}</td>
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>KSh {{ order[3] }}</td>
+                <td>
+                    <span class="status-pill {{ status_badge_class.get(order[4], '') }}">{{ order[4] }}</span>
+                </td>
+                <td>{{ order[5] }}</td>
+                <td>
+                    <form action="{{ url_for('update_order_status', order_id=order[0]) }}" method="POST" style="display:flex; gap:6px;">
+                        <select name="status" style="width:auto; padding:6px 10px; font-size:0.82rem;">
+                            {% for s in order_statuses %}
+                            <option value="{{ s }}" {{ 'selected' if order[4] == s else '' }}>{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn-outline" style="height:34px; padding:0 12px; font-size:0.8rem;">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+
+            {% if not orders %}
+            <tr>
+                <td colspan="7" style="text-align:center; color: var(--ink-soft); padding: 30px;">No orders yet.</td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Terms of Service — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>Terms of Service</h1>
+    </div>
+
+    <div class="legal-content">
+
+        <!-- EDIT ME: set a real date whenever you update this page -->
+        <p class="legal-updated">Last updated: [Month Year]</p>
+
+        <p>
+            By accessing or using Duka Store, you agree to the following terms. Please read
+            them carefully before making a purchase.
+        </p>
+
+        <h2>1. Use of the Site</h2>
+        <p>
+            You must provide accurate information when creating an account, and you are
+            responsible for keeping your login credentials secure.
+        </p>
+
+        <h2>2. Orders and Payments</h2>
+        <p>
+            All orders are paid for via M-Pesa. An order is confirmed once payment has been
+            successfully received. Prices are listed in Kenyan Shillings (KSh) and may change
+            without notice.
+        </p>
+
+        <h2>3. Product Availability</h2>
+        <p>
+            We make every effort to keep our catalogue accurate, but availability and pricing
+            are subject to change. We reserve the right to cancel an order if a product
+            becomes unavailable after purchase.
+        </p>
+
+        <h2>4. Returns and Refunds</h2>
+        <!-- EDIT ME: this is a placeholder. Replace with your actual returns/refunds policy
+             (return window, condition requirements, how refunds are processed, etc.) -->
+        <p>
+            [Describe your actual returns and refunds policy here — for example, how many
+            days a customer has to request a return, what condition the item must be in, and
+            how refunds are issued. This section is a placeholder and should be replaced
+            before relying on it.]
+        </p>
+
+        <h2>5. Limitation of Liability</h2>
+        <p>
+            Duka Store is not liable for indirect or incidental damages arising from the use
+            of this site, to the fullest extent permitted by law.
+        </p>
+
+        <h2>6. Governing Law</h2>
+        <p>
+            These terms are governed by the laws of Kenya.
+        </p>
+
+        <h2>7. Changes to These Terms</h2>
+        <p>
+            We may revise these terms at any time. Continued use of the site after changes
+            are posted constitutes acceptance of the new terms.
+        </p>
+
+        <h2>8. Contact</h2>
+        <p>
+            Questions about these terms? Reach us via our <a href="{{ url_for('contact') }}">Contact page</a>.
+        </p>
+
+    </div>
+
+</div>
+{% endblock %}

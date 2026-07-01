@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-card">
+        <h1>Admin Login</h1>
+        <p class="form-sub">Staff access only. Enter the admin password to continue.</p>
+
+        {% if error %}
+        <div class="flash-msg" style="margin-bottom: 18px;">{{ error }}</div>
+        {% endif %}
+
+        <form action="{{ url_for('admin_login') }}" method="POST">
+
+            <div class="field">
+                <label for="password">Admin Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <p class="form-footer">
+            <a href="{{ url_for('home') }}">← Back to Store</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>Get in Touch</h1>
+        <p>Questions about an order, a product, or anything else? We'd love to hear from you.</p>
+    </div>
+
+    <div class="contact-grid">
+
+        <div class="contact-info-card">
+            <!-- EDIT ME: replace these with your real contact details -->
+            <div class="ci-row">
+                <span class="ci-icon">📧</span>
+                <div>
+                    <h4>Email</h4>
+                    <p>support@dukastore.co.ke</p>
+                </div>
+            </div>
+            <div class="ci-row">
+                <span class="ci-icon">📞</span>
+                <div>
+                    <h4>Phone</h4>
+                    <p>+254 714 821 011</p>
+                </div>
+            </div>
+            <div class="ci-row">
+                <span class="ci-icon">📍</span>
+                <div>
+                    <h4>Location</h4>
+                    <p>Nairobi, Kenya</p>
+                </div>
+            </div>
+            <div class="ci-row">
+                <span class="ci-icon">🕐</span>
+                <div>
+                    <h4>Hours</h4>
+                    <p>Mon – Sat, 8am – 6pm</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card" style="margin: 0; max-width: none;">
+            {% if success %}
+            <div style="text-align: center; padding: 24px 0;">
+                <div style="font-size: 2.4rem; margin-bottom: 10px;">✅</div>
+                <h1>Message Sent</h1>
+                <p class="form-sub">Thanks for reaching out — we'll get back to you soon.</p>
+                <a href="{{ url_for('contact') }}" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Send Another Message</a>
+            </div>
+            {% else %}
+            <h1>Send a Message</h1>
+            <p class="form-sub">Fill in the form and we'll respond as soon as we can.</p>
+
+            <form action="{{ url_for('contact') }}" method="POST">
+                <div class="field">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="field">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit">Send Message</button>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

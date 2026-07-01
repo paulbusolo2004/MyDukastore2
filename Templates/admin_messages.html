@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Messages — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="section-head">
+        <h2>Customer Messages</h2>
+        <span class="section-note">
+            <a href="{{ url_for('admin') }}">← Back to Admin</a>
+        </span>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Received</th>
+            </tr>
+
+            {% for msg in messages %}
+            <tr>
+                <td>{{ msg['name'] }}</td>
+                <td>{{ msg['email'] }}</td>
+                <td style="max-width: 360px;">{{ msg['message'] }}</td>
+                <td>{{ msg['created_at'] }}</td>
+            </tr>
+            {% endfor %}
+
+            {% if not messages %}
+            <tr>
+                <td colspan="4" style="text-align: center; color: var(--ink-soft); padding: 30px;">
+                    No messages yet.
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+
+</div>
+{% endblock %}

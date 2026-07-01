@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="section-head">
+        <h2>Manage Products</h2>
+        <span class="section-note">
+            <a href="{{ url_for('orders') }}">📦 View Orders</a> ·
+            <a href="{{ url_for('admin_messages') }}">✉️ Messages</a> ·
+            <a href="{{ url_for('admin_logout') }}">Admin Logout</a>
+        </span>
+    </div>
+
+    <div class="panel">
+        <h3 style="margin-bottom: 18px;">Add Product</h3>
+
+        <form method="POST" action="{{ url_for('add_product') }}" enctype="multipart/form-data">
+            <div class="admin-form-grid">
+
+                <div class="field">
+                    <label for="name">Product Name</label>
+                    <input type="text" id="name" name="name" placeholder="Product Name" required>
+                </div>
+
+                <div class="field">
+                    <label for="price">Price (KSh)</label>
+                    <input type="number" id="price" name="price" placeholder="Price" required>
+                </div>
+
+                <div class="field">
+                    <label for="image">Image</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+
+                <div class="field">
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        {% for parent, subs in category_tree.items() %}
+                            {% if subs %}
+                            <optgroup label="{{ parent }}">
+                                <option value="{{ parent }}">{{ parent }} (General)</option>
+                                {% for sub in subs %}
+                                <option value="{{ sub }}">{{ sub }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            {% else %}
+                            <option value="{{ parent }}">{{ parent }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field field-full">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Product Description" rows="3" required></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" style="margin-top: 8px;">Add Product</button>
+        </form>
+    </div>
+
+    <div class="section-head">
+        <h2>Available Products</h2>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price (KSh)</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+
+            {% for product in products %}
+            <tr>
+                <td>{{ product[0] }}</td>
+
+                <td>
+                    {% if product[3] %}
+                    <img src="{{ url_for('static', filename='uploads/' + product[3]) }}" width="56" height="56">
+                    {% else %}
+                    No Image
+                    {% endif %}
+                </td>
+
+                <td>{{ product[1] }}</td>
+                <td>{{ product[5] if product|length > 5 else 'Uncategorized' }}</td>
+                <td>KSh {{ product[2] }}</td>
+
+                <td>
+                    {% if product|length > 4 %}
+                        {{ product[4] }}
+                    {% endif %}
+                </td>
+
+                <td style="white-space: nowrap;">
+                    <a href="{{ url_for('edit_product', id=product[0]) }}">
+                        <button type="button" class="btn-outline">Edit</button>
+                    </a>
+
+                    <form action="{{ url_for('delete_product', id=product[0]) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="delete-btn" onclick="return confirm('Delete this product?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>Privacy Policy</h1>
+    </div>
+
+    <div class="legal-content">
+
+        <!-- EDIT ME: set a real date whenever you update this page -->
+        <p class="legal-updated">Last updated: [June 2026]</p>
+
+        <p>
+            This Privacy Policy explains how Duka Store ("we", "us") collects, uses, and
+            protects your personal information when you use our website.
+        </p>
+
+        <h2>Information We Collect</h2>
+        <ul>
+            <li>Account details you provide when registering: your name, email, and password.</li>
+            <li>Order details: items purchased, order totals, and order history.</li>
+            <li>Payment details processed through M-Pesa. We do not store your M-Pesa PIN or
+                full payment credentials — these are handled directly by Safaricom's M-Pesa system.</li>
+            <li>Any information you send us through our Contact form.</li>
+        </ul>
+
+        <h2>How We Use Your Information</h2>
+        <ul>
+            <li>To process and fulfil your orders.</li>
+            <li>To communicate with you about your orders, account, or enquiries.</li>
+            <li>To improve our products and service.</li>
+        </ul>
+
+        <h2>Cookies</h2>
+        <p>
+            We use session cookies to keep you logged in and to remember items in your cart.
+            We do not use cookies for third-party advertising.
+        </p>
+
+        <h2>Third-Party Services</h2>
+        <p>
+            Payments are processed via Safaricom's M-Pesa platform. We encourage you to review
+            Safaricom's own privacy practices regarding how they handle your payment data.
+        </p>
+
+        <h2>Data Security</h2>
+        <p>
+            We take reasonable steps to protect your information, including storing passwords
+            in hashed (not plain-text) form. However, no method of transmission over the
+            internet is ever completely secure.
+        </p>
+
+        <h2>Your Rights</h2>
+        <p>
+            You may request access to, correction of, or deletion of your personal data by
+            reaching out through our <a href="{{ url_for('contact') }}">Contact page</a>.
+        </p>
+
+        <h2>Changes to This Policy</h2>
+        <p>
+            We may update this policy from time to time. Continued use of the site after
+            changes are posted means you accept the updated policy.
+        </p>
+
+        <h2>Contact Us</h2>
+        <p>
+            Questions about this policy? Reach us via our <a href="{{ url_for('contact') }}">Contact page</a>.
+        </p>
+
+    </div>
+
+</div>
+{% endblock %}

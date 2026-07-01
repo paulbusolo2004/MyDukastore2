@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Order #{{ order['id'] }} — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="section-head">
+        <h2>Order #{{ order['id'] }}</h2>
+        <span class="section-note">
+            <a href="{{ url_for('my_orders') }}">← Back to My Orders</a>
+        </span>
+    </div>
+
+    {% if order['status'] == 'Payment Failed' %}
+    <div class="flash-msg" style="margin-bottom: 24px;">
+        ⚠️ We weren't able to confirm payment for this order. Please contact us if you've already paid, or try checking out again.
+    </div>
+    {% else %}
+    <div class="panel">
+        <div class="tracker">
+            <div class="tracker-track"></div>
+            <div class="tracker-track-fill" style="width: {{ (current_index / (statuses|length - 1) * 100) if current_index > 0 else 0 }}%;"></div>
+
+            {% for s in statuses %}
+            <div class="tracker-step {{ 'completed' if current_index > loop.index0 else '' }} {{ 'active' if loop.index0 == current_index else '' }}">
+                <div class="tracker-dot"></div>
+                <div class="tracker-label">{{ s }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if order['status'] == 'Out for Delivery' %}
+        <div style="text-align: center; margin-top: 20px;">
+            <p style="color: var(--ink-soft); margin-bottom: 14px;">Has your order arrived?</p>
+            <form action="{{ url_for('confirm_delivery', order_id=order['id']) }}" method="POST">
+                <button type="submit" class="btn-primary">✅ I've Received This Order</button>
+            </form>
+        </div>
+        {% elif order['status'] == 'Delivered' %}
+        <div style="text-align: center; margin-top: 20px; color: var(--ink-soft);">
+            🎉 Delivered — thanks for confirming!
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="section-head">
+        <h2>Items in This Order</h2>
+        <span class="section-note">Total: KSh {{ order['total'] }}</span>
+    </div>
+
+    {% for item in items %}
+    <div class="cart-item">
+        {% if item['image'] %}
+        <img src="{{ url_for('static', filename='uploads/' + item['image']) }}" alt="{{ item['name'] }}">
+        {% endif %}
+        <div class="cart-item-info">
+            <h3>{{ item['name'] }}</h3>
+            <p>KSh {{ item['price'] }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

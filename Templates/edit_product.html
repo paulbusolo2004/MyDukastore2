@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Product — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="section-head">
+        <h2>Update Product</h2>
+        <span class="section-note">
+            <a href="{{ url_for('admin') }}">← Back to Dashboard</a>
+        </span>
+    </div>
+
+    <div class="panel" style="max-width: 540px;">
+
+        {% if product[3] %}
+        <div style="margin-bottom: 20px;">
+            <label style="display:block; font-size:0.85rem; font-weight:600; color: var(--ink-soft); margin-bottom:8px;">Current Image</label>
+            <img src="{{ url_for('static', filename='uploads/' + product[3]) }}" width="120" style="border-radius: 8px;">
+        </div>
+        {% endif %}
+
+        <form action="{{ url_for('update_product', id=product[0]) }}" method="POST" enctype="multipart/form-data">
+
+            <div class="field">
+                <label for="name">Product Name</label>
+                <input type="text" id="name" name="name" value="{{ product[1] }}" required>
+            </div>
+
+            <div class="field">
+                <label for="price">Price (KSh)</label>
+                <input type="number" id="price" name="price" value="{{ product[2] }}" required>
+            </div>
+
+            <div class="field">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required>{{ product[4] }}</textarea>
+            </div>
+
+            <div class="field">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    {% set current = product[5] if product|length > 5 else 'Other' %}
+                    {% for parent, subs in category_tree.items() %}
+                        {% if subs %}
+                        <optgroup label="{{ parent }}">
+                            <option value="{{ parent }}" {{ 'selected' if current == parent else '' }}>{{ parent }} (General)</option>
+                            {% for sub in subs %}
+                            <option value="{{ sub }}" {{ 'selected' if current == sub else '' }}>{{ sub }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        {% else %}
+                        <option value="{{ parent }}" {{ 'selected' if current == parent else '' }}>{{ parent }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="image">Change Image (optional)</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+
+            <button type="submit">Save Changes</button>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

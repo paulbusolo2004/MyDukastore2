@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product[1] }} — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <p style="margin-bottom: 20px;">
+        <a href="{{ url_for('home') }}">← Back to Store</a>
+    </p>
+
+    <div class="product-detail">
+
+        <div class="pd-image">
+            {% if product[3] %}
+            <img src="{{ url_for('static', filename='uploads/' + product[3]) }}" alt="{{ product[1] }}">
+            {% else %}
+            <div class="no-image" style="height:100%; display:flex; align-items:center; justify-content:center;">No Image</div>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if product[5] %}
+            <div class="pd-category">{{ product[5] }}</div>
+            {% endif %}
+            <h1>{{ product[1] }}</h1>
+            <p class="pd-price">KSh {{ product[2] }}</p>
+
+            <h3>Description</h3>
+            <p style="color: var(--ink-soft);">{{ product[4] }}</p>
+
+            <a href="{{ url_for('add_to_cart', id=product[0]) }}">
+                <button type="button" class="btn-primary" style="margin-top: 16px;">Add to Cart</button>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Duka Store{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo-icon.png') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<nav class="site-nav">
+    <div class="nav-inner">
+        <a href="{{ url_for('home') }}" class="brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Duka Store" class="brand-logo">
+        </a>
+
+        <div class="nav-categories">
+            {% for cat in nav_categories %}
+            <div class="nav-cat-item">
+                <a href="{{ url_for('shop', category=cat.name) }}" class="nav-cat-link">
+                    {{ cat.name }}{% if cat.subcategories %} ▾{% endif %}
+                </a>
+                {% if cat.subcategories %}
+                <div class="nav-dropdown">
+                    {% for sub in cat.subcategories %}
+                    <a href="{{ url_for('shop', category=sub.name) }}">{{ sub.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <a href="{{ url_for('shop', sort='newest') }}" class="nav-cat-link">New Arrivals</a>
+            <a href="{{ url_for('shop', sort='bestsellers') }}" class="nav-cat-link">Best Sellers</a>
+        </div>
+
+        <div class="nav-actions">
+            <form class="nav-search" action="{{ url_for('shop') }}" method="GET">
+                <input type="text" name="q" placeholder="Search products...">
+                <button type="submit" aria-label="Search">🔍</button>
+            </form>
+
+            <a href="{{ url_for('cart') }}" class="cart-badge-link">
+                🛒
+                {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}
+            </a>
+
+            {% if session.user_id %}
+                <a href="{{ url_for('my_orders') }}">My Orders</a>
+                <span class="nav-user">Hi, {{ session.user_name }}</span>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}" class="cta-link">Register</a>
+            {% endif %}
+
+            <a href="{{ url_for('admin') }}" class="admin-link">Admin</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+
+        <div class="footer-col">
+            <h4 style="display: flex; align-items: center; gap: 10px;">
+                <img src="{{ url_for('static', filename='images/logo-icon.png') }}" alt="" class="footer-logo">
+                DUKA STORE
+            </h4>
+            <p>Quality products for every generation, delivered with M-Pesa-secured checkout.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                {% for cat in nav_categories %}
+                <li><a href="{{ url_for('shop', category=cat.name) }}">{{ cat.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Follow Us</h4>
+            <div class="footer-social">
+                <span>📱</span><span>📷</span><span>🐦</span><span>▶️</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        &copy; 2026 Duka Store. All rights reserved.
+    </div>
+</footer>
+
+<button class="floating-chat" onclick="document.getElementById('chatTooltip').classList.toggle('visible')" aria-label="Chat with us">💬</button>
+<div class="chat-tooltip" id="chatTooltip">Live chat coming soon — for now, reach us via the contact details above.</div>
+
+</body>
+</html>

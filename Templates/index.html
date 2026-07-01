@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Duka Store — Shop quality products, pay with M-Pesa{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-inner">
+        <div>
+            <span class="hero-badge">✨ New arrivals every week</span>
+            <h1>Shop Everything at Duka</h1>
+            <p class="lede">
+                Electronics, fashion, footwear, and more — for everyone.
+                Log in to browse our full catalogue and checkout in seconds with M-Pesa.
+            </p>
+
+            <form class="hero-search" action="{{ url_for('shop') }}" method="GET">
+                <input type="text" name="q" placeholder="Search for products...">
+                <button type="submit">Search</button>
+            </form>
+
+            <div class="hero-trust">
+                <span>🔒 Secure M-Pesa Checkout</span>
+                <span>🛍️ Wide Selection</span>
+            </div>
+        </div>
+
+        <div class="hero-art">
+            <span class="hero-art-emoji">🛍️</span>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+    {% if nav_categories %}
+    <div class="section-head">
+        <h2>Shop by Category</h2>
+    </div>
+
+    <div class="category-row">
+        {% for cat in nav_categories %}
+        <a href="{{ url_for('shop', category=cat.name) }}" class="category-card">
+            <div class="cat-icon">{{ cat.icon }}</div>
+            <div class="cat-name">{{ cat.name }}</div>
+            <div class="cat-count">{{ cat.count }} item{{ 's' if cat.count != 1 else '' }}</div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="collection-banner">
+        <h2>🌟 Shop by Collection</h2>
+        <div class="collection-pills">
+            <a href="{{ url_for('shop', sort='newest') }}">New Arrivals</a>
+            <a href="{{ url_for('shop', sort='bestsellers') }}">Best Sellers</a>
+            <a href="{{ url_for('shop') }}">Browse All</a>
+        </div>
+    </div>
+
+    <div class="empty-state">
+        <div class="empty-icon">🔑</div>
+        <p>
+            {% if session.user_id or session.is_admin %}
+                You're logged in — head to the shop to see everything we have.
+            {% else %}
+                Log in or create an account to browse our full product catalogue.
+            {% endif %}
+        </p>
+        <a href="{{ url_for('shop') }}" class="btn btn-primary" style="margin-top: 14px; display: inline-block;">
+            Go to Shop
+        </a>
+    </div>
+
+</div>
+
+<div class="trust-bar">
+    <div class="trust-bar-inner">
+        <div class="trust-item-v2"><span class="icon">🔒</span> Secure Payment</div>
+        <div class="trust-item-v2"><span class="icon">🛍️</span> Wide Selection</div>
+        <div class="trust-item-v2"><span class="icon">📞</span> Easy Support</div>
+    </div>
+</div>
+
+{% endblock %}

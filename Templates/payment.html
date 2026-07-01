@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Payment — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-card">
+        <h1>Complete Payment</h1>
+        <p class="form-sub">Order #{{ order_id }} — enter your M-Pesa number to receive a payment prompt.</p>
+
+        <form action="{{ url_for('pay', order_id=order_id) }}" method="POST">
+
+            <div class="field">
+                <label for="phone">M-Pesa Phone Number</label>
+                <input type="text" id="phone" name="phone" placeholder="07XXXXXXXX" required>
+            </div>
+
+            <button type="submit">Pay with M-Pesa</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

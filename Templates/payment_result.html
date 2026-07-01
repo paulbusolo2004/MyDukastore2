@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Payment {{ 'Sent' if success else 'Failed' }} — Duka Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-card" style="text-align: center; max-width: 460px;">
+
+        {% if success %}
+            <div style="font-size: 3rem; margin-bottom: 12px;">📲</div>
+            <h1>Check Your Phone</h1>
+            <p class="form-sub">
+                We've sent an M-Pesa payment prompt to <strong>{{ phone }}</strong>.
+                Enter your M-Pesa PIN on your phone to complete the payment.
+            </p>
+
+            <div style="background: #F8F9FB; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 20px 0; text-align: left;">
+                <p style="margin: 0 0 6px; font-size: 0.85rem; color: var(--ink-soft);">Order Reference</p>
+                <p style="margin: 0; font-weight: 600;">#{{ order_id }}</p>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--ink-soft);">
+                Didn't get the prompt? Make sure your phone has network coverage,
+                then refresh this page to try again.
+            </p>
+        {% else %}
+            <div style="font-size: 3rem; margin-bottom: 12px;">⚠️</div>
+            <h1>Payment Could Not Be Sent</h1>
+            <p class="form-sub">{{ message }}</p>
+        {% endif %}
+
+        <a href="{{ url_for('shop') }}" class="btn btn-primary" style="margin-top: 14px; display: inline-block;">
+            Back to Shop
+        </a>
+    </div>
+</div>
+{% endblock %}
